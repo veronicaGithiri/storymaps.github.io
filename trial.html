@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>StoryMaps</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <style>
+      .navbar {
+        background-color: gray;
+        padding: 0px;
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        width: 100vw;
+      }
+      .navbar h1 {
+        font-size: medium;
+        color: black;
+      }
+
+      .navbar-button {
+        /* margin-right: 10px; */
+        padding: 20px 20px;
+        background-color: gray;
+        border: 1px solid teal;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .active {
+        background-color: teal;
+      }
+
+      .Home {
+        display: flex;
+        height: 10vh;
+        background-color: whitesmoke;
+        height: 100vh;
+        width: 100vw;
+        align-items: center;
+      }
+      .home-card {
+        flex: 1;
+        height: 100vh;
+        border: none;
+        padding: 10px;
+        margin: 5px;
+      }
+      .home-card img {
+        width: 90%;
+        /* max-width: 200px; */
+        height: 90vh;
+        margin-top: 20px;
+        margin-left: 20px;
+      }
+      .home-card h1 {
+        font-family: Cambria, Cochin, Georgia, Times,
+          "Times New Roman", serif;
+        font-size: 100px;
+        color: gold;
+        margin-top: 20%;
+        margin-left: 15%;
+        margin-bottom: 40%;
+        text-align: left;
+      }
+      .intro-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: whitesmoke;
+        height: 100vh;
+        width: 100vw;
+      }
+      .intro-text {
+        flex: 1;
+        margin-right: 0px;
+      }
+      .intro-text h1 {
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      .intro-text p {
+        margin-top: 30px;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .intro-image img {
+        width: 100%;
+        max-width: 800px;
+        border-radius: 5px;
+        margin-top: 100px;
+      }
+      .era-container {
+        height: 100vh;
+        width: 100vw;
+        padding: 20px;
+        align-items: center;
+        padding: 10px;
+        background-color: whitesmoke;
+      }
+      .era-text {
+        margin-top: 30px;
+        margin-bottom: 20px;
+      }
+      .era-text h2 {
+        margin-top: 100px;
+        font-size: 36px;
+        margin-bottom: 30px;
+      }
+      .era-text p {
+        margin-top: 30px;
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .early-stages-container {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+      }
+      .early-stages-text {
+        flex: 1;
+        margin-right: 20px;
+      }
+      .early-stages-text h2 {
+        font-size: 36px;
+        margin-bottom: 30px;
+        margin-top: 100px;
+      }
+      .early-stages-text p {
+        font-size: 18px;
+        line-height: 1.5;
+        margin-bottom: 30px;
+      }
+      .early-stages-image img {
+        width: 100%;
+        max-width: 2000px;
+        border-radius: 5px;
+      }
+      .expansion-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+      }
+      .expansion-text {
+        flex: 1;
+        margin-right: 20px;
+      }
+      .expansion-text h2 {
+        font-size: 28px;
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      .expansion-text p {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      #map {
+        width: 90vw;
+        height: 80vh;
+        border-radius: 10px;
+        margin-left: 3%;
+      }
+      .map-text h2 {
+        margin-bottom: 5%;
+        font-style: italic;
+        color: teal;
+      }
+      .impacts-container {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: 5px;
+        justify-content: space-between;
+        padding: 20px;
+        text-align: center;
+      }
+      .impacts-section {
+        flex: 1;
+        margin-bottom: 20px;
+      }
+      .impacts-section h2 {
+        margin-top: 5px;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+      .impacts-section p {
+        font-size: 18px;
+        line-height: 1.5;
+      }
+      .impacts-section img {
+        display: flex;
+        align-items: center;
+        width: 300px;
+        height: 300px;
+        border-radius: 20%;
+        margin-bottom: 20px;
+        margin-left: 5%;
+      }
+      /* .swiper-container {
+        width: 100vw;
+        height: 100vh;
+      }
+      .swiper-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+        background-color: #f2f2f2;
+      }
+      .swiper-slide h2 {
+        margin-top: 10%;
+      }
+      .swiper-slide img {
+        display: block;
+        align-items: center;
+        max-width:100px;
+        max-height:100px;
+        border-radius: 20%;
+        margin-bottom: 20px;
+        margin-left: 5%;
+      } */
+      .future-container {
+        margin-top: 10px;
+        padding: 20px;
+      }
+      .future-container h2 {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 36px;
+        margin-bottom: 10px;
+      }
+      .future-container p {
+        margin-top: 3px;
+        font-size: 18px;
+        line-height: 2;
+        text-align: center;
+      }
+      .future-image img {
+        width: 100%;
+        max-width: 2000px;
+        border-radius: 5px;
+      }
+      .footer {
+        background-color: #f2f2f2;
+        padding: 20px;
+        text-align: center;
+      }
+      .footer p {
+        font-size: 14px;
+        color: #777;
+        margin: 0;
+      }
+    </style>
+  </head>
+ <body>
+    <!-- navigation tabs-->
+    <div class="navbar"> 
+      <!--Navigation bar-->
+      <!-- <button
+        class="navbar-button"
+        onclick="openTab('intro')"
+      > -->
+        <!-- --INTRODUCTION--
+      </button>
+      <button
+        class="navbar-button"
+        onclick="openTab('map2')"
+      > -->
+        <!-- Chiang Mai
+      </button>
+      <button
+        class="navbar-button"
+        onclick="openTab('map3')"
+      > --> 
+        <!-- Phuket
+      </button> -->
+      <h1>ENC 221-0071/2018</h1>
+    </div> 
+    <!-- Home section -->
+    <div class="Home">
+      <div class="home-card">
+        <img
+          src="landmark-pagoda-doi-inthanon-national-park-chiang-mai-thailand_335224-779.jpg"
+          alt="Inthanon National Park"
+        />
+      </div>
+      <div class="home-card">
+        <h1>Tourism in Thailand And its Effects</h1>
+      </div>
+    </div>
+    <!--INTRODUCTION-->
+    <div class="intro-container" id="intro">
+      <div class="intro-text">
+        <h1>
+          Thailand: Where Heritage and Beauty Converge
+        </h1>
+        <p>
+          Discover a country of rich cultural heritage,
+          breathtaking natural beauty, and captivating
+          history. Welcome to Thailand, a land that enchants
+          travelers from around the world.
+        </p>
+        <p>
+          With its vibrant traditions, magnificent temples,
+          and warm hospitality, Thailand offers a unique and
+          unforgettable travel experience. From the bustling
+          streets of Bangkok to the tranquil beaches of
+          Phuket and the ancient ruins of Ayutthaya,
+          <br />this Southeast Asian gem has something to
+          captivate every visitor.
+        </p>
+        <p>
+          As tourism in Thailand continues to flourish, the
+          country has emerged as one of the most
+          sought-after destinations on the global travel
+          map. Its enchanting landscapes, diverse cuisine,
+          and vibrant festivals attract millions of tourists
+          each year,<br />
+          eager to explore its treasures and immerse
+          themselves in its charm.
+        </p>
+      </div>
+      <div class="intro-image">
+        <img
+          src="thailand-tourist-map-max.jpg"
+          height="600px"
+          width="500px"
+          alt="thailand-tourist-map"
+        />
+      </div>
+    </div>
+    <!--Pretourism Era-->
+    <div class="era-container">
+      <div class="era-text">
+        <h2>A Glimpse into Thailand's Pre-tourism Era</h2>
+        <p>
+          Before the advent of mass tourism, Thailand
+          thrived with a rich historical context and a
+          traditional way of life. The country's cultural
+          tapestry and pristine landscapes were cherished by
+          its local population.
+        </p>
+        <p>
+          Agriculture formed the backbone of the Thai
+          economy during this era, with rice being the
+          primary crop. The fertile lands of Thailand
+          nurtured vast paddy fields, and farming techniques
+          were deeply ingrained in the local lifestyle.
+          Fishing and forestry were also integral
+          industries, reflecting the close relationship
+          between the Thai people and nature.
+        </p>
+        <p>
+          The local population embraced their unique customs
+          and traditions, preserving a way of life deeply
+          rooted in Buddhism and ancient practices. Temples,
+          such as Wat Arun and Wat Phra Kaew, stood as
+          spiritual landmarks and architectural wonders that
+          symbolized the spiritual devotion and artistic
+          brilliance of the Thai people.
+        </p>
+      </div>
+    </div>
+    <div class="early-stages-container">
+      <div class="early-stages-text">
+        <h2>
+          The Advent of Tourism in the 1960s and 1970s
+        </h2>
+        <p>
+          In the 1960s and 1970s, Thailand experienced a
+          significant influx of tourists, marking the
+          beginning of its journey as a popular tourist
+          destination. Explorers from around the globe were
+          drawn to Thailand's alluring charm, pristine
+          beaches, and unique cultural heritage.
+        </p>
+        <p>
+          This initial wave of tourism had a transformative
+          impact on Thailand's economy and society. Small
+          guesthouses and local businesses sprouted up in
+          response to the growing demand for accommodation,
+          dining, and entertainment. Thai entrepreneurs
+          seized the opportunity, providing services and
+          products tailored to the needs and preferences of
+          these early tourists.
+        </p>
+        <p>
+          As the number of visitors increased, Thailand's
+          tourism infrastructure gradually developed.
+          Improved transportation networks, including
+          airports and roads, facilitated easier access to
+          remote areas of the country. This, in turn, opened
+          up new avenues for exploration and attracted
+          adventurous travelers seeking off-the-beaten-path
+          experiences.
+        </p>
+      </div>
+      <div class="early-stages-image">
+        <img
+          src="thai-pavilion-new-york-1964.jpg"
+          alt="Early Stages of Tourism"
+        />
+      </div>
+    </div>
+    <!--Current state of tourism-->
+    <div class="expansion-container">
+      <div class="expansion-text">
+        <h2>
+          Rapid Growth of Tourism in the 1980s and 1990s
+        </h2>
+        <p>
+          The 1980s and 1990s witnessed a tremendous surge
+          in tourism in Thailand. Increased international
+          exposure through media and travel publications,
+          along with the country's improved infrastructure,
+          played a crucial role in attracting a growing
+          number of visitors from across the globe.
+        </p>
+        <p>
+          This period marked the emergence of popular
+          tourist destinations that continue to captivate
+          travelers today. Bangkok, Thailand's vibrant
+          capital, became a bustling hub of commerce,
+          culture, and tourism. Phuket, with its stunning
+          beaches and luxury resorts, enticed sun-seekers
+          and water sports enthusiasts. Chiang Mai, nestled
+          in the lush mountains of the north, offered a
+          blend of ancient temples, traditional markets, and
+          natural beauty. Pattaya, known for its lively
+          nightlife and coastal attractions, became a
+          favorite destination for partygoers and beach
+          lovers.
+        </p>
+      </div>
+    </div>
+    <div id="map-text">
+      <h2>Interact with the map</h2>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+      var map = L.map("map").setView(
+        [13.7367, 100.5231],
+        7
+      ); // Thailand's coordinates
+
+      L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          maxZoom: 18,
+          attribution:
+            'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        }
+      ).addTo(map);
+
+      var markers = [
+        {
+          coordinates: [13.7563, 100.5018], // Bangkok coordinates
+          image: "bangkok.jpg",
+          description:
+            "<h3>Bangkok</h3><p>Thailand's bustling capital city and major tourist hub.</p>",
+        },
+        {
+          coordinates: [7.8804, 98.3923], // Phuket coordinates
+          image: "phuket.jpg",
+          description:
+            "<h3>Phuket</h3><p>A popular beach destination known for its stunning coastline and vibrant nightlife.</p>",
+        },
+        {
+          coordinates: [18.7883, 98.9853], // Chiang Mai coordinates
+          image: "chiang.jpg",
+          description:
+            "<h3>Chiang Mai</h3><p>A city in northern Thailand, famous for its temples, traditional markets, and cultural festivals.</p>",
+        },
+        {
+          coordinates: [12.9236, 100.8828], // Pattaya coordinates
+          image: "pattaya.jpg",
+          description:
+            "<h3>Pattaya</h3><p>A vibrant coastal city known for its nightlife and beach attractions.</p>",
+        },
+        {
+          coordinates: [9.1333, 99.3167], // Koh Samui coordinates
+          image: "https://unsplash.com/photos/9feX7sbEkYc",
+          description:
+            "<h3>Koh Samui</h3><p>An island paradise with pristine beaches and luxury resorts.</p>",
+        },
+        {
+          coordinates: [14.9686, 102.083], // Khao Yai coordinates
+          image: "khaoyai.jpg",
+          description:
+            "<h3>Khao Yai</h3><p>A UNESCO World Heritage Site known for its stunning national park and wildlife.</p>",
+        },
+        {
+          coordinates: [14.953, 100.8283], // Ayutthaya coordinates
+          image: "ayutthaya.jpg",
+          description:
+            "<h3>Ayutthaya</h3><p>Home to ancient ruins and historical sites, offering a glimpse into Thailand's rich history.</p>",
+        },
+        {
+          coordinates: [9.512, 100.0136], // Koh Phi Phi coordinates
+          image: "kohphiphi.jpg",
+          description:
+            "<h3>Koh Phi Phi</h3><p>A breathtaking archipelago with crystal-clear waters, ideal for snorkeling and diving.</p>",
+        },
+        {
+          coordinates: [18.7877, 98.9931], // Doi Suthep coordinates
+          image: "doisuthep.jpg",
+          description:
+            "<h3>Doi Suthep</h3><p>A sacred mountain and renowned temple offering panoramic views of Chiang Mai.</p>",
+        },
+        {
+          coordinates: [15.87, 100.9925], // Khao Lak coordinates
+          image: "khaolak.jpg",
+          description:
+            "<h3>Khao Lak</h3><p>A serene beach destination with stunning national parks and a gateway to the Similan Islands.</p>",
+        },
+        {
+          coordinates: [9.512, 100.0136], // Koh Phi Phi coordinates
+          image: "kohphiphi.jpg",
+          description:
+            "<h3>Koh Phi Phi</h3><p>A breathtaking archipelago with crystal-clear waters, ideal for snorkeling and diving.</p>",
+        },
+        {
+          coordinates: [13.1066, 99.9357], // Hua Hin coordinates
+          image: "huahin.jpg",
+          description:
+            "<h3>Hua Hin</h3><p>A popular seaside resort town known for its long beaches and world-class golf courses.</p>",
+        },
+        {
+          coordinates: [8.0863, 98.9063], // Krabi coordinates
+          image: "krabi.jpg",
+          description:
+            "<h3>Krabi</h3><p>A paradise of limestone cliffs, pristine beaches, and vibrant marine life.</p>",
+        },
+        {
+          coordinates: [12.5684, 99.9577], // Pranburi coordinates
+          image: "pranburi.jpg",
+          description:
+            "<h3>Pranburi</h3><p>A tranquil coastal town offering a laid-back atmosphere and scenic natural attractions.</p>",
+        },
+        {
+          coordinates: [16.4425, 101.2511], // Loei coordinates
+          image: "loei.jpg",
+          description:
+            "<h3>Loei</h3><p>A mountainous province in northeastern Thailand known for its stunning landscapes and unique culture.</p>",
+        },
+        {
+          coordinates: [14.479, 100.0976], // Nakhon Ratchasima coordinates
+          image: "nakhonratchasima.jpg",
+          description:
+            "<h3>Nakhon Ratchasima</h3><p>A gateway to Khao Yai National Park and a region rich in history and cultural heritage.</p>",
+        },
+      ];
+
+      markers.forEach(function (marker) {
+        var popupContent = `
+            <div>
+                <img src="${marker.image}" height="200" width="300" alt="Image">
+                ${marker.description}
+            </div>
+        `;
+        L.marker(marker.coordinates)
+          .addTo(map)
+          .bindPopup(popupContent);
+      });
+    </script>
+    <!--Impacts of the tourism-->
+    <div class="impacts-container">
+      <div class="impacts-section">
+        <h2>Economic Benefits</h2>
+        <img src="market profile.png" alt="Job Creation" />
+        <p>
+          Tourism has had numerous positive impacts on the
+          Thai economy. One of the significant benefits is
+          job creation, providing employment opportunities
+          for people across various sectors, including
+          hospitality, transportation, retail, and
+          handicrafts. The influx of tourists also leads to
+          increased foreign exchange earnings, contributing
+          to the country's balance of payments. Furthermore,
+          the growth of tourism has fueled infrastructure
+          development, such as the expansion of airports,
+          roads, and hotels, benefiting both tourists and
+          locals alike.
+        </p>
+      </div>
+      <div class="impacts-section">
+        <h2>Socio-cultural Impacts</h2>
+        <img
+          src="Distribution-of-ethnic-groups.jpg"
+          alt="Cultural Exchange"
+        />
+        <p>
+          The interaction between tourists and locals has
+          brought about notable changes in Thai society. The
+          influence of Western culture, brought by tourists,
+          has resulted in the adoption of foreign customs
+          and practices. This cultural exchange has enriched
+          Thai society, fostering a diverse and
+          multicultural environment. While embracing new
+          influences, Thailand has successfully preserved
+          its rich traditions and cultural heritage,
+          allowing tourists to experience the authentic
+          charm of the country.
+        </p>
+      </div>
+
+      <div class="impacts-section">
+        <h2>Environmental Concerns</h2>
+        <img
+          src="land-11-02253-g002.png"
+          alt="Job Creation"
+        />
+        <p>
+          Mass tourism has presented environmental
+          challenges for Thailand. The increase in visitor
+          numbers has led to deforestation, particularly in
+          areas with high demand for accommodations and
+          infrastructure development. Pollution, both land
+          and water-based, has become a pressing issue,
+          impacting the quality of air, water sources, and
+          marine ecosystems. Coral reef degradation due to
+          unsustainable tourism practices, such as
+          irresponsible snorkeling and diving, has also been
+          a concern.
+        </p>
+      </div>
+
+      <div class="impacts-section">
+        <h2>Efforts to Mitigate Environmental Issues</h2>
+        <img
+          src="DSC_0074-960x720.jpg"
+          alt="Environmental Conservation"
+        />
+        <p>
+          The Thai government, along with local communities
+          and environmental organizations, has implemented
+          initiatives to mitigate the environmental impacts
+          of tourism. These include stricter regulations on
+          waste management, promoting eco-friendly
+          practices, and encouraging sustainable tourism
+          activities. Efforts are being made to raise
+          awareness among tourists and locals about the
+          importance of preserving Thailand's natural
+          resources and biodiversity. Community-led
+          conservation projects and the establishment of
+          marine protected areas aim to protect fragile
+          ecosystems and promote responsible tourism.
+        </p>
+      </div>
+    </div>
+    <!-- 
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <h2>Economic Benefits - Job Creation</h2>
+          <p>
+            Tourism in Thailand has generated numerous job
+            opportunities across sectors such as
+            hospitality, transportation, retail, and
+            handicrafts, providing employment to thousands
+            of people.
+          </p>
+          <img src="444.jpeg" alt="Job Creation" />
+          <img
+            src="market profile.png"
+            alt="Job Creation"
+          />
+          <img src="slide1.jpg" alt="Job Creation" />
+        </div>
+        <div class="swiper-slide">
+          <h2>
+            Socio-cultural Impacts - Cultural Exchange
+          </h2>
+          <p>
+            The interaction between tourists and locals has
+            resulted in a rich cultural exchange, allowing
+            Thai society to embrace new influences while
+            preserving its traditions and cultural heritage.
+          </p>
+          <img
+            src="ruben-hutabarat-QZaYfCbnjig-unsplash.jpg"
+            alt="Cultural Exchange"
+          />
+          <img
+            src="Thailand_ethnic_map.svg.png"
+            alt="Cultural Exchange"
+          />
+        </div>
+        <div class="swiper-slide">
+          <h2>
+            Environmental Concerns - Conservation Efforts
+          </h2>
+          <p>
+            Thailand is actively addressing environmental
+            challenges by implementing initiatives to
+            preserve its natural resources, protect fragile
+            ecosystems, and promote responsible tourism
+            practices.
+          </p>
+          <img
+            src="land-11-02253-g002.png"
+            alt="Land Use Land Cover map"
+          />
+          <img
+            src="DSC_0074-960x720.jpg"
+            alt="Environmental Conservation"
+          />
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div> -->
+
+    <div class="future-container">
+      <h2>A Sustainable and Responsible Future</h2>
+      <p>
+        The future of tourism in Thailand holds a strong
+        focus on sustainable development, responsible
+        tourism practices, and the preservation of the
+        country's natural and cultural heritage. Recognizing
+        the importance of striking a balance between
+        economic growth and environmental conservation,
+        Thailand is taking proactive measures to ensure the
+        long-term well-being of its people, resources, and
+        ecosystems.
+      </p>
+      <p>
+        Sustainable tourism practices are being promoted,
+        encouraging tourists to engage in activities that
+        minimize negative impacts on the environment and
+        local communities. Initiatives such as eco-tourism,
+        community-based tourism, and nature conservation
+        projects are gaining momentum, providing visitors
+        with authentic experiences while supporting local
+        economies and preserving fragile ecosystems.
+      </p>
+      <p>
+        Efforts are underway to reduce the carbon footprint
+        of the tourism industry through energy-efficient
+        infrastructure, waste management programs, and the
+        promotion of sustainable transportation options.
+        Additionally, partnerships between the government,
+        private sector, and local communities are being
+        fostered to ensure the equitable distribution of
+        economic benefits and empower local populations to
+        actively participate in and benefit from the tourism
+        sector.
+      </p>
+      <p>
+        Thailand remains committed to preserving its unique
+        cultural heritage, encouraging tourists to
+        appreciate and respect the customs, traditions, and
+        values of the local communities they visit.
+        Preservation of historical sites, traditional
+        craftsmanship, and local arts is vital to
+        maintaining Thailand's cultural identity and
+        providing authentic and enriching experiences for
+        visitors.
+      </p>
+      <p>
+        As Thailand continues to evolve as a sustainable
+        tourism destination, it aims to be a global leader
+        in responsible tourism, inspiring other countries to
+        adopt similar practices. By embracing
+        sustainability, Thailand is poised to create a
+        future where tourism thrives in harmony with the
+        environment, culture, and communities, ensuring the
+        continued allure and resilience of the Land of
+        Smiles.
+      </p>
+      <div class="future-image">
+        <img
+          src="Amadeus-Thailand.jpg"
+          alt="Future of Tourism"
+        />
+      </div>
+    </div>
+    <div class="footer">
+      <p>
+        &copy; 2023 Tourism in Thailand. All rights
+        reserved.
+      </p>
+    </div>
+  </body>
+</html>

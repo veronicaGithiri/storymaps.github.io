@@ -1,0 +1,150 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.banner{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(transparent,rgba(162, 156, 156, 0.368));
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+.banner h1 {
+    animation: changeColors 5s infinite;
+  }
+body{
+    /* background-image: url(back1); */
+    background-size: contain;
+    background-color: papayawhip;
+    }
+    .map-container {
+      height: 400px;
+      margin-bottom: 20px;
+    }
+    .tab-button {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration-color: black;
+    background-color: grey;
+    border: 2px solid palegoldenrod;
+    border-radius: 4px;
+    color: whitesmoke;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    }
+    .active {
+      background-color: paleturquoise;
+    }
+    .article {
+      margin-bottom: 30px;
+    }
+    .article h2 {
+      margin-bottom: 10px;
+    }
+    .article p {
+      margin-bottom: 5px;
+    }
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 35px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+.logo{
+    width: 120px;
+    cursor: pointer;
+    color: #000;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+.navbar ul li a{
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #009688;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+}
+.content{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    color: wheat; 
+}
+.content h1{
+    font-size: 70px;
+    margin-top: 80px;
+    font-family: 'Franklin Gothic Medium', 
+    'Arial Narrow', Arial, sans-serif;
+}
+.content p{
+    margin: 20px auto;
+    font-weight: 100;
+    line-height: 25px;
+}
+
+.map-container {
+    height: 400px;
+    margin-bottom: 20px;
+  }
+  .tab-button {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    text-align: center;
+    background-color: palegreen;
+    border: 2px solid palegoldenrod;
+    border-radius: 4px;
+    color: whitesmoke;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+  }
+  .active {
+    background-color: #ddd;
+    }
+.span{
+    background: teal; 
+    height: 100%;
+    width: 100%;
+    border-radius: 25px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+ }
+.tab-button:hover{
+    border: 1px solid yellow;
+    background: blue;
+    transition: 0.5s;
+    }
+.tab-button:hover span{
+     width: 100%;
+    }
+    
